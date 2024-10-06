@@ -1,16 +1,21 @@
 # Project Setup Instructions
 
+This project utilizes the **ANN Dataset** as referenced in the following paper:  
+https://link.springer.com/article/10.1007/s10579-012-9211-2
+
+The recommended Python version for running this project is **Python 3.12.4**. Follow the instructions below to set up the project and run it.
+
 ### Prerequisites
 Before you begin, ensure you have the following installed:
-- Python 3.x
+- Python 3.x (Recommended version: 3.12.4)
 - `pip` (Python package installer)
 
 ### Step-by-Step Guide
 
-1. **Clone the repository** (if applicable):
+1. **Clone the repository**:
    Open your terminal or command prompt, navigate to your desired folder, and run:
    
-   ```
+   ```bash
    git clone <repository-url>
    cd <repository-folder>
    ```
@@ -19,38 +24,35 @@ Before you begin, ensure you have the following installed:
    It is recommended to create a virtual environment to manage dependencies.
    Run the following commands:
    
-   ```
+   ```bash
    python -m venv venv
    ```
 
    Activate the virtual environment:
    - **For Windows**:
    
-   ```
+   ```bash
      venv\Scripts\activate
    ```
      
    - **For macOS/Linux**:
    
-   ```
+   ```bash
      source venv/bin/activate
    ```
 
 3. **Install dependencies**:
    Once you have the virtual environment activated, install the required packages by running:
    
-   ```
+   ```bash
    pip install -r requirements.txt
    ```
 
    This command will install all the necessary packages, including the Neo4j Python driver, and any other dependencies for the project.
 
 4. **Run the application**:
-   Follow the specific instructions in the project documentation to run the application.
+   To run the project, simply execute:
 
-5. **Deactivating the virtual environment** (optional):
-   Once done, you can deactivate the virtual environment with:
-   
-   ```
-   deactivate
+   ```bash
+   python main.py
    ```
