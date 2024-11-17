@@ -1,4 +1,4 @@
-Follow ../README.md, then run 
+Follow ../README.md up to setup .env, then run 
 
 ```bash
 python query_neo4j.py
