@@ -50,7 +50,16 @@ Before you begin, ensure you have the following installed:
 
    This command will install all the necessary packages, including the Neo4j Python driver, and any other dependencies for the project.
 
-4. **Run the application**:
+4. **Setup**:
+   Create a `.env` file in the root directory with the following content:
+
+   ```env
+   NEO4J_URI=<your_uri_here>
+   NEO4J_USERNAME=<your_username_here>
+   NEO4J_PASSWORD=<your_password_here>
+   ```
+
+5. **Run the application**:
    To run the project, simply execute:
 
    ```bash
