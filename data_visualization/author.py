@@ -8,91 +8,38 @@ from py2neo import Graph
 import community.community_louvain as community_louvain
 import matplotlib.pyplot as plt
 
-uri = "neo4j+s://8df4b24f.databases.neo4j.io"
-username = "neo4j"
-password = "mbTM6NJ62-cY1Duvdu9J7lk3PhhIrOQwdFe7jwVwM5Q"
-database = "neo4j"
-
 def community_detection():
+    # Connect to Neo4j
     neo4j_graph = Graph(uri, auth=("neo4j", password))
+    output_file = "community_results.txt"
+
     # Query nodes and relationships
     query = """
     MATCH (a)-[r]->(b)
-    RETURN a.name AS source, b.name AS target
+    RETURN id(a) AS source_id, id(b) AS target_id
     """
     results = neo4j_graph.run(query)
 
     # Create NetworkX graph
     G = nx.Graph()
     for record in results:
-        G.add_edge(record["source"], record["target"])
+        G.add_edge(record["source_id"], record["target_id"])
 
     # Louvain community detection
     partition = community_louvain.best_partition(G)
-    print(partition)
 
-    # Label Propagation
-    communities = nx.algorithms.community.label_propagation_communities(G)
-    for community in communities:
-        print(community)
-    # Assign colors to nodes based on their community
-    pos = nx.spring_layout(G)
-    nx.draw(
-        G,
-        pos,
-        with_labels=True,
-        node_color=[partition[node] for node in G.nodes()]
-    )
-    plt.show()
+    # Calculate community statistics
+    community_sizes = {}
+    for community_id in partition.values():
+        community_sizes[community_id] = community_sizes.get(community_id, 0) + 1
 
-def filered_community():
-    neo4j_graph = Graph(uri, auth=("neo4j", password))
-    # Query nodes and relationships
-    query = """
-        MATCH (a)-[r]->(b)
-        RETURN a.name AS source, b.name AS target
-        """
-    results = neo4j_graph.run(query)
+    num_communities = len(community_sizes)
+    avg_size = sum(community_sizes.values()) / num_communities
 
-    # Create NetworkX graph
-    G = nx.Graph()
-    for record in results:
-        G.add_edge(record["source"], record["target"])
-    # Louvain community detection
-    partition = community_louvain.best_partition(G)
-
-    # Group nodes by community
-    from collections import defaultdict
-    communities = defaultdict(list)
-    for node, community in partition.items():
-        communities[community].append(node)
-
-    # Filter communities with more than 10 members
-    filtered_communities = {c: nodes for c, nodes in communities.items() if len(nodes) > 100}
-
-    # Print filtered communities
-    print("Filtered Communities:")
-    for community, nodes in filtered_communities.items():
-        print(f"Community {community}: {nodes}")
-
-    # Create a subgraph with nodes from the filtered communities
-    filtered_nodes = [node for nodes in filtered_communities.values() for node in nodes]
-    filtered_graph = G.subgraph(filtered_nodes)
-
-    # Assign colors to nodes based on their community
-    color_map = {node: community for community, nodes in filtered_communities.items() for node in nodes}
-    node_colors = [color_map[node] for node in filtered_graph.nodes()]
-
-    # Visualize the filtered graph
-    pos = nx.spring_layout(filtered_graph)
-    nx.draw(
-        filtered_graph,
-        pos,
-        with_labels=True,
-        node_color=node_colors,
-        cmap=plt.cm.tab20
-    )
-    plt.show()
+    # Output results
+    print(f"Community results saved to {output_file}")
+    print(f"Number of communities: {num_communities}")
+    print(f"Average community size: {avg_size:.2f}")
 
 def filered_community_adjustment_visulization():
 
@@ -162,6 +109,26 @@ def update_with_community_number():
     # Perform community detection using Louvain
     partition = community_louvain.best_partition(G)
 
+    from collections import Counter
+
+    # Count the number of nodes in each community
+    community_sizes = Counter(partition.values())
+
+    # Print the size of each community
+    print("Community Sizes:")
+    for community, size in community_sizes.items():
+        print(f"Community {community}: {size} nodes")
+
+    # File path to save the output
+    output_file = "author_community.txt"
+
+    # Write each author and their community number to the file
+    with open(output_file, "w") as f:
+        for author, community_number in partition.items():
+            f.write(f"{author}, {community_number}\n")  # Write as "author, community_number"
+
+    print(f"Author-community data has been saved to {output_file}.")
+
     # Now, update Neo4j with community information
     for node, community in partition.items():
         # Assuming you have nodes identified by `name`, and each node needs a `community` property
@@ -174,4 +141,4 @@ def update_with_community_number():
 
 
 if __name__ == "__main__":
-   update_with_community_number()
+    community_detection()
