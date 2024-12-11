@@ -9,37 +9,40 @@ import community.community_louvain as community_louvain
 import matplotlib.pyplot as plt
 
 def community_detection():
-    # Connect to Neo4j
+    # Connect to the Neo4j graph database
     neo4j_graph = Graph(uri, auth=("neo4j", password))
-    output_file = "community_results.txt"
+    output_file = "community_results.txt"  # Specify the output file for results
 
-    # Query nodes and relationships
+    # Query the graph to get node relationships (edges)
     query = """
     MATCH (a)-[r]->(b)
     RETURN id(a) AS source_id, id(b) AS target_id
     """
-    results = neo4j_graph.run(query)
+    results = neo4j_graph.run(query)  # Execute the query and fetch the results
 
-    # Create NetworkX graph
+    # Create a NetworkX graph to represent the nodes and relationships
     G = nx.Graph()
     for record in results:
+        # Add an edge to the graph using node IDs as source and target
         G.add_edge(record["source_id"], record["target_id"])
 
-    # Louvain community detection
+    # Perform community detection using the Louvain method
     partition = community_louvain.best_partition(G)
 
-    # Calculate community statistics
+    # Calculate the size of each community
     community_sizes = {}
     for community_id in partition.values():
+        # Count the number of nodes in each community
         community_sizes[community_id] = community_sizes.get(community_id, 0) + 1
 
+    # Calculate the number of communities and the average community size
     num_communities = len(community_sizes)
     avg_size = sum(community_sizes.values()) / num_communities
 
-    # Output results
-    print(f"Community results saved to {output_file}")
-    print(f"Number of communities: {num_communities}")
-    print(f"Average community size: {avg_size:.2f}")
+    # Print the results of the community detection
+    print(f"Community results saved to {output_file}")  # Inform the user about the output file
+    print(f"Number of communities: {num_communities}")  # Print the number of communities detected
+    print(f"Average community size: {avg_size:.2f}")  # Print the average size of the communities
 
 def filered_community_adjustment_visulization():
 
