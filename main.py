@@ -1,5 +1,6 @@
 from data_preparation import data_download
 from data_visualization import data_preview
+from experiments import citation_graph_local_run
 
 if __name__ == "__main__":
     
@@ -12,3 +13,7 @@ if __name__ == "__main__":
     # Print the max and min citation counts
     data_preview.max_and_min_in_degree_citation()
     data_preview.max_and_min_out_degree_citation()
+
+    # Quick experiment with 1000 random samples citation network 
+    # paper recommendation
+    citation_graph_local_run.run_citation_recommender()
