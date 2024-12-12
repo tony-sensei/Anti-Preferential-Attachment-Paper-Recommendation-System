@@ -59,20 +59,25 @@ Before you begin, ensure you have the following installed:
    NEO4J_PASSWORD=<your_password_here>
    ```
 
-5. **Run the application**:
+
+5. **Neo4J setup**
+   The Neo4J database setup and modification files are in `neo4j_toolkits`
+
+
+6. **Run the application**:
    Most of the results are stored in `visulization/preview` 
    and `experiments/results`. 
 
-   To prepare the dataset, Neo4j, and re-run the experiments, execute:
+   To prepare the dataset and re-run the experiments, execute:
 
    ```bash
    python main.py
    ```
 
 
-6. **Weight Reaccessment of Edges**
+7. **Weight Reaccessment of Edges**
    Execute python files in `weight_reaccessment_of_edges` for doing Weight Reaccessment of Edges modification.
 
 
-7. **Model evaluation**
+8. **Model evaluation**
    Execute python file in `model_evaluation` for doing model evaluation.

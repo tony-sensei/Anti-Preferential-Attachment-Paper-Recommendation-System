@@ -6,3 +6,5 @@ python-dotenv==1.0.1
 networkx==3.4.2
 node2vec==0.5.0
 scikit-learn==1.5.2
+py2neo==2021.2.4
+community==1.0.0b1

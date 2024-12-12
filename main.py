@@ -14,6 +14,6 @@ if __name__ == "__main__":
     data_preview.max_and_min_in_degree_citation()
     data_preview.max_and_min_out_degree_citation()
 
-    # Quick experiment with 1000 random samples citation network 
+    # Experiments with random samples citation network 
     # paper recommendation
     citation_graph_local_run.run_citation_recommender()

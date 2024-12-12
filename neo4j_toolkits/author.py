@@ -7,6 +7,17 @@ import networkx as nx
 from py2neo import Graph
 import community.community_louvain as community_louvain
 import matplotlib.pyplot as plt
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file located one parent directory above
+dotenv_path = Path(__file__).resolve().parent.parent / ".env"
+load_dotenv(dotenv_path)
+
+# Neo4j connection details
+uri = os.getenv("NEO4J_URI")
+username = os.getenv("NEO4J_USERNAME")
+password = os.getenv("NEO4J_PASSWORD")
 
 def community_detection():
     # Connect to the Neo4j graph database
