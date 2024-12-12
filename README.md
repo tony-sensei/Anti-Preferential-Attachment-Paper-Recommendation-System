@@ -60,7 +60,10 @@ Before you begin, ensure you have the following installed:
    ```
 
 5. **Run the application**:
-   To run the project, simply execute:
+   Most of the results are stored in `visulization/preview` 
+   and `experiments/results`. 
+
+   To prepare the dataset, Neo4j, and re-run the experiments, execute:
 
    ```bash
    python main.py
