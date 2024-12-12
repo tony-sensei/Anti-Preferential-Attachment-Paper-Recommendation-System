@@ -69,5 +69,10 @@ Before you begin, ensure you have the following installed:
    python main.py
    ```
 
-6. **Model evaluation**
-   Execute python file in model_evaluation for doing model evaluation.
+
+6. **Weight Reaccessment of Edges**
+   Execute python files in `weight_reaccessment_of_edges` for doing Weight Reaccessment of Edges modification.
+
+
+7. **Model evaluation**
+   Execute python file in `model_evaluation` for doing model evaluation.
