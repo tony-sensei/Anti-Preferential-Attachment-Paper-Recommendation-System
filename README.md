@@ -68,3 +68,6 @@ Before you begin, ensure you have the following installed:
    ```bash
    python main.py
    ```
+
+6. **Model evaluation**
+   Execute python file in model_evaluation for doing model evaluation.
